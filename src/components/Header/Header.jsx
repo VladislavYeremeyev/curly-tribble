@@ -7,6 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ShoppingCartSidebar from "../ShoppingCartSidebar/ShoppingCartSidebar";
+import ShoppingCart from "../../components/ShoppingCart/ShoppingCart";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,13 +37,10 @@ export default function Header() {
           {/*>*/}
           {/*  <MenuIcon />*/}
           {/*</IconButton>*/}
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h5" component="h1" className={classes.title}>
             Items List
           </Typography>
-          <IconButton onClick={() => {}}>
-            <ShoppingCartIcon style={{ color: "white" }} />
-          </IconButton>
-          <ShoppingCartSidebar />
+          <ShoppingCart />
         </Toolbar>
       </AppBar>
     </div>

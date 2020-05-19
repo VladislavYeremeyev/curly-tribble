@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Header from "./components/Header/Header";
 
 function App() {

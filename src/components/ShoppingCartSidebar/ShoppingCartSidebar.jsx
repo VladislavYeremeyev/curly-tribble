@@ -10,50 +10,46 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
   list: {
-    width: 250,
+    minWidth: 350,
   },
-  fullList: {
-    width: "auto",
+  title: {
+    padding: 10,
+    textAlign: "center",
+    fontSize: 24,
   },
 });
 
-export default function ShoppingCartSidebar() {
+export default function ShoppingCartSidebar({ open, items, toggleDrawer }) {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    open: true,
-  });
-
-  const toggleDrawer = (open) => () => {
-    setState({ open });
-  };
 
   const list = (
     <div
+      className={classes.list}
       role="presentation"
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
+      <Typography className={classes.title}>Shopping Cart</Typography>
       <Divider />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
+        {items.map((item, index) => (
+          <ListItem button key={item.name}>
+            <ListItemAvatar>
+              <Avatar
+                alt={`Avatar n°${value + 1}`}
+                src={`/static/images/avatar/${value + 1}.jpg`}
+              />
+            </ListItemAvatar>
             <ListItemText primary={text} />
+            <ListItemSecondaryAction>
+              <IconButton edge="end" aria-label="comments">
+                <CommentIcon />
+              </IconButton>
+            </ListItemSecondaryAction>
           </ListItem>
         ))}
       </List>
@@ -61,12 +57,7 @@ export default function ShoppingCartSidebar() {
   );
 
   return (
-    <Drawer
-      anchor="right"
-      open
-      // open={state[anchor]}
-      onClose={toggleDrawer(false)}
-    >
+    <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
       {list}
     </Drawer>
   );
