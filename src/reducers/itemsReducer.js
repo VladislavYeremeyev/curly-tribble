@@ -1,23 +1,40 @@
-import { ADD_ITEM, DELETE_ITEM, CHANGE_AMOUNT } from "../actions/cartActions";
+import {
+  FETCH_ITEMS_BEGIN,
+  FETCH_ITEMS_SUCCESS,
+  FETCH_ITEMS_FAILURE,
+} from "../actions/itemsActions";
 
-const cartReducer = (state = [], action) => {
+const initialState = {
+  items: [],
+  loading: false,
+  error: null,
+};
+
+export default function productReducer(state = initialState, action) {
   switch (action.type) {
-    case ADD_ITEM:
-      return [...state, action.payload];
-    case DELETE_ITEM:
-      return state.filter((item) => item.id !== action.payload);
-    case CHANGE_AMOUNT:
-      return state.map((item) => {
-        if (item.id === action.payload.id) {
-          return Object.assign({}, item, {
-            amount: action.payload.amount,
-          });
-        }
-        return item;
-      });
+    case FETCH_ITEMS_BEGIN:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+
+    case FETCH_ITEMS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        items: action.payload.items,
+      };
+
+    case FETCH_ITEMS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+        items: [],
+      };
+
     default:
       return state;
   }
-};
-
-export default cartReducer;
+}

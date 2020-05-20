@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { red } from "@material-ui/core/colors";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { Link } from "react-router-dom";
+import { fetchItems } from "../../actions/itemsActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,13 +28,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ItemsList() {
-  const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+export default class ItemsList extends React.Component {
+  // const classes = useStyles();
+  // const [expanded, setExpanded] = React.useState(false);
+  //
+  // const handleExpandClick = () => {
+  //   setExpanded(!expanded);
+  // };
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  componentDidMount() {
+    if (!this.props.items.length) {
+      this.props.dispatch(fetchItems());
+    }
+  }
 
-  return <Link to="/item">Item</Link>;
+  render() {
+    const { error, loading, items } = this.props;
+
+    if (error) {
+      return <div>Error! {error.message}</div>;
+    }
+
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+
+    return (
+      <ul>
+        {(items || []).map((item, i) => (
+          <li key={i}>
+            <Link to={`/${item.id}`}>{item.name}</Link>
+          </li>
+        ))}
+      </ul>
+    );
+  }
 }

@@ -8,7 +8,6 @@ export const CHANGE_AMOUNT = "CHANGE_AMOUNT";
 /*
  * Action creators
  */
-
 export function addItem(item) {
   return { type: ADD_ITEM, payload: item };
 }
