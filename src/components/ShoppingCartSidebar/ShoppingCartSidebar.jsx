@@ -38,6 +38,11 @@ const useStyles = makeStyles({
     fontSize: 32,
     fontWeight: "bold",
   },
+  "CartSidebar-EmptyText": {
+    fontSize: 18,
+    textAlign: "center",
+    marginTop: 16,
+  },
 });
 
 export default function ShoppingCartSidebar({
@@ -59,46 +64,52 @@ export default function ShoppingCartSidebar({
         Shopping Cart
       </Typography>
       <Divider />
-      <List>
-        {items.map((item) => (
-          <Link className={classes["CartSidebar-Item"]} to={`/${item.id}`}>
-            <ListItem button key={item.name}>
-              <ListItemAvatar>
-                <Avatar alt={item.name} src={getImagePath(item.image_id)} />
-              </ListItemAvatar>
-              <ListItemText>
-                <strong>{item.name}</strong>
-                <div>{`Price: ${item.price}$`}</div>
-                <div>{`Amount: ${item.amount}`}</div>
-                <strong>{`Total: ${item.amount * item.price}$`}</strong>
-              </ListItemText>
-              <ItemAmountControl
-                amount={item.amount}
-                onIncrease={() => onChangeAmount(item.id, item.amount + 1)}
-                onDecrease={() => {
-                  const newAmount = item.amount - 1;
-                  onChangeAmount(item.id, newAmount);
-                  if (newAmount < 1) {
-                    onDeleteClick(item.id);
-                  }
-                }}
-              />
-              <ListItemSecondaryAction>
-                <IconButton
-                  onClick={(e) => {
-                    onDeleteClick(item.id);
-                    e.preventDefault();
+      {items.length ? (
+        <List>
+          {items.map((item) => (
+            <Link className={classes["CartSidebar-Item"]} to={`/${item.id}`}>
+              <ListItem button key={item.name}>
+                <ListItemAvatar>
+                  <Avatar alt={item.name} src={getImagePath(item.image_id)} />
+                </ListItemAvatar>
+                <ListItemText>
+                  <strong>{item.name}</strong>
+                  <div>{`Price: ${item.price}$`}</div>
+                  <div>{`Amount: ${item.amount}`}</div>
+                  <strong>{`Total: ${item.amount * item.price}$`}</strong>
+                </ListItemText>
+                <ItemAmountControl
+                  amount={item.amount}
+                  onIncrease={() => onChangeAmount(item.id, item.amount + 1)}
+                  onDecrease={() => {
+                    const newAmount = item.amount - 1;
+                    onChangeAmount(item.id, newAmount);
+                    if (newAmount < 1) {
+                      onDeleteClick(item.id);
+                    }
                   }}
-                  edge="end"
-                  aria-label="comments"
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          </Link>
-        ))}
-      </List>
+                />
+                <ListItemSecondaryAction>
+                  <IconButton
+                    onClick={(e) => {
+                      onDeleteClick(item.id);
+                      e.preventDefault();
+                    }}
+                    edge="end"
+                    aria-label="comments"
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            </Link>
+          ))}
+        </List>
+      ) : (
+        <Typography className={classes["CartSidebar-EmptyText"]}>
+          Cart is empty
+        </Typography>
+      )}
       {totalCost > 0 && (
         <Typography
           className={classes["CartSidebar-Total"]}
