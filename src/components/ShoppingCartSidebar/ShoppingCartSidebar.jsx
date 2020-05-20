@@ -6,10 +6,12 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
@@ -40,14 +42,14 @@ export default function ShoppingCartSidebar({ open, items, toggleDrawer }) {
           <ListItem button key={item.name}>
             <ListItemAvatar>
               <Avatar
-                alt={`Avatar n°${value + 1}`}
-                src={`/static/images/avatar/${value + 1}.jpg`}
+                alt={`Avatar n`}
+                src={`/static/images/avatar/${item.img}.jpg`}
               />
             </ListItemAvatar>
-            <ListItemText primary={text} />
+            <ListItemText primary={item.name} />
             <ListItemSecondaryAction>
               <IconButton edge="end" aria-label="comments">
-                <CommentIcon />
+                <DeleteIcon />
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>

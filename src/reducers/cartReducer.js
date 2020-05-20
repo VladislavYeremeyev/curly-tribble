@@ -7,8 +7,8 @@ const cartReducer = (state = [], action) => {
     case DELETE_ITEM:
       return state.filter((item) => item.id !== action.payload);
     case CHANGE_AMOUNT:
-      return state.map((item, index) => {
-        if (index === action.payload.id) {
+      return state.map((item) => {
+        if (item.id === action.payload.id) {
           return Object.assign({}, item, {
             amount: action.payload.amount,
           });
