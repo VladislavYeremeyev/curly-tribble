@@ -9,11 +9,16 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import Link from "@material-ui/core/Link";
+import Divider from "@material-ui/core/Divider";
+import getImagePath from "../../utils/unsplashPath";
+import ItemAmountControl from "../ItemAmountControl/ItemAmountControl";
 
 const useStyles = makeStyles((theme) => ({
   ItemCard: {
-    maxWidth: 345,
+    minWidth: 345,
+    textAlign: "left",
   },
   "ItemCard-Media": {
     height: 0,
@@ -22,13 +27,22 @@ const useStyles = makeStyles((theme) => ({
   "ItemCard-ActionButton": {
     marginLeft: "auto",
   },
+  "ItemCard-Title": {
+    fontSize: 28,
+    fontWeight: "bold",
+  },
+  "ItemCard-Price": {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
 }));
 
 export default function ItemCard({
   item,
   onAddClick,
   onDeleteClick,
-  isInCart,
+  onChangeAmount,
+  cartItem,
 }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -39,31 +53,48 @@ export default function ItemCard({
 
   return (
     <Card className={classes.ItemCard}>
-      <Link to={`/${item.id}`}>
+      <RouterLink to={`/${item.id}`}>
         <CardMedia
           className={classes["ItemCard-Media"]}
-          image={`https://source.unsplash.com/${item.image_id}/400x200`}
+          image={getImagePath(item.image_id)}
           title={item.name}
         />
-      </Link>
+      </RouterLink>
       <CardContent>
-        <Link to={`/${item.id}`}>
-          <Typography variant="body2" color="textSecondary" component="p">
-            This impressive paella is a perfect party dish and a fun meal to
-            cook together with your guests. Add 1 cup of frozen peas along with
-            the mussels, if you like.
+        <Link component={RouterLink} to={{ pathname: `/${item.id}`, item }}>
+          <Typography className={classes["ItemCard-Title"]}>
+            {item.name}
           </Typography>
         </Link>
+        <Typography className={classes["ItemCard-Price"]}>
+          {`Price: ${item.price}$`}
+        </Typography>
       </CardContent>
+      <Divider />
       <CardActions disableSpacing>
-        {isInCart ? (
-          <IconButton
-            className={classes["ItemCard-ActionButton"]}
-            onClick={onDeleteClick}
-            aria-label="delete"
-          >
-            <RemoveShoppingCartIcon style={{ color: "red", fontSize: 40 }} />
-          </IconButton>
+        {cartItem ? (
+          <>
+            <ItemAmountControl
+              amount={cartItem.amount}
+              onIncrease={() =>
+                onChangeAmount(cartItem.id, cartItem.amount + 1)
+              }
+              onDecrease={() => {
+                const newAmount = cartItem.amount - 1;
+                onChangeAmount(cartItem.id, newAmount);
+                if (newAmount < 1) {
+                  onDeleteClick(cartItem.id);
+                }
+              }}
+            />
+            <IconButton
+              className={classes["ItemCard-ActionButton"]}
+              onClick={onDeleteClick}
+              aria-label="delete"
+            >
+              <RemoveShoppingCartIcon style={{ color: "red", fontSize: 40 }} />
+            </IconButton>
+          </>
         ) : (
           <IconButton
             className={classes["ItemCard-ActionButton"]}

@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ItemsList({
-  dispatch,
   error,
   loading,
   items,
@@ -53,16 +52,15 @@ export default function ItemsList({
       {items.map((item, i) => (
         <li className={classes["ItemsList-Item"]} key={i}>
           <ItemCard
-            onAddClick={(e) => {
+            onAddClick={() => {
               onAddClick(item);
-              e.preventDefault();
             }}
-            onDeleteClick={(e) => {
+            onDeleteClick={() => {
               onDeleteClick(item.id);
-              e.preventDefault();
             }}
+            onChangeAmount={onChangeAmount}
             item={item}
-            isInCart={cartItems.find((el) => el.id === item.id)}
+            cartItem={cartItems.find((el) => el.id === item.id)}
           />
         </li>
       ))}

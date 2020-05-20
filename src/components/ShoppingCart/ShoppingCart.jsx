@@ -5,7 +5,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ShoppingCartSidebar from "../../components/ShoppingCartSidebar/ShoppingCartSidebar";
 import Badge from "@material-ui/core/Badge";
 
-export default function ShoppingCart({ items, onDeleteClick }) {
+export default function ShoppingCart({ items, onDeleteClick, onChangeAmount }) {
   const [state, setState] = React.useState({
     open: false,
   });
@@ -26,6 +26,7 @@ export default function ShoppingCart({ items, onDeleteClick }) {
         open={state.open}
         toggleDrawer={toggleDrawer}
         onDeleteClick={onDeleteClick}
+        onChangeAmount={onChangeAmount}
       />
     </>
   );
