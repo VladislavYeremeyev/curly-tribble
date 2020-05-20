@@ -2,12 +2,9 @@ import { connect } from "react-redux";
 import { deleteItem, changeAmount } from "../actions/cartActions";
 import ShoppingCart from "../components/ShoppingCart/ShoppingCart";
 
-const mapStateToProps = (state) => {
-  console.log(state);
-  return {
-    items: state.cartItems,
-  };
-};
+const mapStateToProps = (state) => ({
+  items: state.cartItems,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onDeleteClick: (id) => dispatch(deleteItem(id)),
