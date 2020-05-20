@@ -7,33 +7,29 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { red } from "@material-ui/core/colors";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  ItemCard: {
     maxWidth: 345,
   },
-  media: {
+  "ItemCard-Media": {
     height: 0,
     paddingTop: "56.25%", // 16:9
   },
-  expand: {
-    transform: "rotate(0deg)",
+  "ItemCard-ActionButton": {
     marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: "rotate(180deg)",
-  },
-  avatar: {
-    backgroundColor: red[500],
   },
 }));
 
-export default function ItemCard({ name, price, imageID }) {
+export default function ItemCard({
+  item,
+  onAddClick,
+  onDeleteClick,
+  isInCart,
+}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -42,23 +38,41 @@ export default function ItemCard({ name, price, imageID }) {
   };
 
   return (
-    <Card className={classes.root}>
-      <CardMedia
-        className={classes.media}
-        image={`https://source.unsplash.com/${imageID}/400x200`}
-        title={name}
-      />
+    <Card className={classes.ItemCard}>
+      <Link to={`/${item.id}`}>
+        <CardMedia
+          className={classes["ItemCard-Media"]}
+          image={`https://source.unsplash.com/${item.image_id}/400x200`}
+          title={item.name}
+        />
+      </Link>
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
-        </Typography>
+        <Link to={`/${item.id}`}>
+          <Typography variant="body2" color="textSecondary" component="p">
+            This impressive paella is a perfect party dish and a fun meal to
+            cook together with your guests. Add 1 cup of frozen peas along with
+            the mussels, if you like.
+          </Typography>
+        </Link>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add">
-          <AddShoppingCartIcon style={{ color: "green", fontSize: 40 }} />
-        </IconButton>
+        {isInCart ? (
+          <IconButton
+            className={classes["ItemCard-ActionButton"]}
+            onClick={onDeleteClick}
+            aria-label="delete"
+          >
+            <RemoveShoppingCartIcon style={{ color: "red", fontSize: 40 }} />
+          </IconButton>
+        ) : (
+          <IconButton
+            className={classes["ItemCard-ActionButton"]}
+            onClick={onAddClick}
+            aria-label="add"
+          >
+            <AddShoppingCartIcon style={{ color: "green", fontSize: 40 }} />
+          </IconButton>
+        )}
       </CardActions>
     </Card>
   );

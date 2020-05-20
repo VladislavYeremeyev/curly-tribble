@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
-import { fetchItems } from "../../actions/itemsActions";
 import ItemCard from "../ItemCard/ItemCard";
 import LoadSpinner from "../LoadSpinner/LoadSpinner";
 
@@ -18,19 +16,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ItemsList({ dispatch, error, loading, items }) {
+export default function ItemsList({
+  dispatch,
+  error,
+  loading,
+  items,
+  cartItems,
+  onAddClick,
+  onDeleteClick,
+  onChangeAmount,
+  fetchItems,
+}) {
   const classes = useStyles();
-  // const [expanded, setExpanded] = React.useState(false);
-  //   //
-  //   // const handleExpandClick = () => {
-  //   //   setExpanded(!expanded);
-  //   // };
-  //
+  const [itemsDisplayType, setItemsDisplayType] = React.useState("grid");
+
+  const handleChangeDisplayType = (type) => {
+    setItemsDisplayType(type);
+  };
+
   useEffect(() => {
     if (!items.length) {
-      dispatch(fetchItems());
+      fetchItems();
     }
-  }, []);
+  });
 
   if (error) {
     return <div>Error! {error.message}</div>;
@@ -42,15 +50,20 @@ export default function ItemsList({ dispatch, error, loading, items }) {
 
   return (
     <ul className={classes.ItemsList}>
-      {(items || []).map((item, i) => (
+      {items.map((item, i) => (
         <li className={classes["ItemsList-Item"]} key={i}>
-          <Link to={`/${item.id}`}>
-            <ItemCard
-              price={item.price}
-              name={item.name}
-              imageID={item.image_id}
-            />
-          </Link>
+          <ItemCard
+            onAddClick={(e) => {
+              onAddClick(item);
+              e.preventDefault();
+            }}
+            onDeleteClick={(e) => {
+              onDeleteClick(item.id);
+              e.preventDefault();
+            }}
+            item={item}
+            isInCart={cartItems.find((el) => el.id === item.id)}
+          />
         </li>
       ))}
     </ul>

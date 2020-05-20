@@ -25,16 +25,16 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ShoppingCartSidebar({ open, items, toggleDrawer }) {
+export default function ShoppingCartSidebar({
+  open,
+  items,
+  toggleDrawer,
+  onDeleteClick,
+}) {
   const classes = useStyles();
 
   const list = (
-    <div
-      className={classes.list}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
+    <div className={classes.list} role="presentation">
       <Typography className={classes.title}>Shopping Cart</Typography>
       <Divider />
       <List>
@@ -48,7 +48,11 @@ export default function ShoppingCartSidebar({ open, items, toggleDrawer }) {
             </ListItemAvatar>
             <ListItemText primary={item.name} />
             <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="comments">
+              <IconButton
+                onClick={() => onDeleteClick(item.id)}
+                edge="end"
+                aria-label="comments"
+              >
                 <DeleteIcon />
               </IconButton>
             </ListItemSecondaryAction>

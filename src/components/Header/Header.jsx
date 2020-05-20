@@ -7,7 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ShoppingCartSidebar from "../ShoppingCartSidebar/ShoppingCartSidebar";
-import ShoppingCart from "../../components/ShoppingCart/ShoppingCart";
+import ShoppingCart from "../../containers/ShoppingCart";
 
 const useStyles = makeStyles((theme) => ({
   root: {

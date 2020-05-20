@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { deleteItem, changeAmount } from "../actions/cartActions";
-import ShoppingCartSidebar from "../components/ShoppingCartSidebar/ShoppingCartSidebar";
+import ShoppingCart from "../components/ShoppingCart/ShoppingCart";
 
 const mapStateToProps = (state) => {
   console.log(state);
@@ -14,7 +14,4 @@ const mapDispatchToProps = (dispatch) => ({
   onChangeAmount: (id, amount) => dispatch(changeAmount(id, amount)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ShoppingCartSidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCart);
