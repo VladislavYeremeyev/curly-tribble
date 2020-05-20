@@ -20,9 +20,15 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 345,
     textAlign: "left",
   },
+  ItemCard_view_list: {
+    display: "flex",
+  },
   "ItemCard-Media": {
     height: 0,
     paddingTop: "56.25%", // 16:9
+  },
+  "ItemCard-Media_view_list": {
+    width: 300,
   },
   "ItemCard-ActionButton": {
     marginLeft: "auto",
@@ -35,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 20,
     fontWeight: "bold",
   },
+  "ItemsList-ItemActions_view_list": {
+    marginLeft: "auto",
+  },
 }));
 
 export default function ItemCard({
@@ -43,6 +52,7 @@ export default function ItemCard({
   onDeleteClick,
   onChangeAmount,
   cartItem,
+  view,
 }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -52,10 +62,16 @@ export default function ItemCard({
   };
 
   return (
-    <Card className={classes.ItemCard}>
+    <Card
+      className={clsx(classes.ItemCard, {
+        [classes["ItemCard_view_list"]]: view === "list",
+      })}
+    >
       <RouterLink to={`/${item.id}`}>
         <CardMedia
-          className={classes["ItemCard-Media"]}
+          className={clsx(classes["ItemCard-Media"], {
+            [classes["ItemCard-Media_view_list"]]: view === "list",
+          })}
           image={getImagePath(item.image_id)}
           title={item.name}
         />
@@ -71,7 +87,12 @@ export default function ItemCard({
         </Typography>
       </CardContent>
       <Divider />
-      <CardActions disableSpacing>
+      <CardActions
+        className={clsx(classes["ItemsList-ItemActions"], {
+          [classes["ItemsList-ItemActions_view_list"]]: view === "list",
+        })}
+        disableSpacing
+      >
         {cartItem ? (
           <>
             <ItemAmountControl
