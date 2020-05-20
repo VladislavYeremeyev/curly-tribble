@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { red } from "@material-ui/core/colors";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { useLocation, useParams } from "react-router-dom";
 import LoadSpinner from "../LoadSpinner/LoadSpinner";
@@ -8,9 +7,6 @@ import getImagePath from "../../utils/unsplashPath";
 import Typography from "@material-ui/core/Typography";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
 import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
-import IconButton from "@material-ui/core/IconButton";
 import ItemAmountControl from "../ItemAmountControl/ItemAmountControl";
 
 const useStyles = makeStyles((theme) => ({

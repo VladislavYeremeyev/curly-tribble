@@ -1,4 +1,3 @@
-import React from "react";
 import { connect } from "react-redux";
 import ItemsList from "../components/ItemsList/ItemsList";
 import { addItem, changeAmount, deleteItem } from "../actions/cartActions";
