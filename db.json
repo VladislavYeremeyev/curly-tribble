@@ -11,14 +11,6 @@
     { "id": 9, "name": "Shoe 9", "price": 25, "image_id": "WlB8TsI_th0" },
     { "id": 10, "name": "Shoe 10", "price": 21, "image_id": "tjvURCarBf0" },
     { "id": 11, "name": "Shoe 11", "price": 16, "image_id": "_fOL6ebfECQ" },
-    { "id": 12, "name": "Shoe 12", "price": 12, "image_id": "j1GiPlvSGWI" },
-    { "id": 13, "name": "Shoe 13", "price": 34, "image_id": "updW-QUccFE" },
-    { "id": 14, "name": "Shoe 14", "price": 21, "image_id": "PqbL_mxmaUE" },
-    { "id": 15, "name": "Shoe 15", "price": 28, "image_id": "NOpsC3nWTzY" },
-    { "id": 16, "name": "Shoe 16", "price": 21, "image_id": "b2-fBVrfx0o" },
-    { "id": 17, "name": "Shoe 17", "price": 23, "image_id": "1BI-ar91C7U" },
-    { "id": 18, "name": "Shoe 18", "price": 16, "image_id": "DMl5gG0yWWY" },
-    { "id": 19, "name": "Shoe 19", "price": 14, "image_id": "EfLwt5Xz5Ek" },
-    { "id": 20, "name": "Shoe 20", "price": 29, "image_id": "fUEP0djb1hA" }
+    { "id": 12, "name": "Shoe 12", "price": 12, "image_id": "j1GiPlvSGWI" }
   ]
 }
