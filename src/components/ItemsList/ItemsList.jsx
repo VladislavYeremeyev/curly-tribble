@@ -1,66 +1,58 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { red } from "@material-ui/core/colors";
-import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { Link } from "react-router-dom";
 import { fetchItems } from "../../actions/itemsActions";
+import ItemCard from "../ItemCard/ItemCard";
+import LoadSpinner from "../LoadSpinner/LoadSpinner";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 345,
+  ItemsList: {
+    listStyle: "none",
+    paddingInlineStart: 0,
+    display: "flex",
+    justifyContent: "space-around",
+    flexWrap: "wrap",
   },
-  media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: "rotate(180deg)",
-  },
-  avatar: {
-    backgroundColor: red[500],
+  "ItemsList-Item": {
+    marginBottom: 16,
   },
 }));
 
-export default class ItemsList extends React.Component {
-  // const classes = useStyles();
+export default function ItemsList({ dispatch, error, loading, items }) {
+  const classes = useStyles();
   // const [expanded, setExpanded] = React.useState(false);
+  //   //
+  //   // const handleExpandClick = () => {
+  //   //   setExpanded(!expanded);
+  //   // };
   //
-  // const handleExpandClick = () => {
-  //   setExpanded(!expanded);
-  // };
-
-  componentDidMount() {
-    if (!this.props.items.length) {
-      this.props.dispatch(fetchItems());
+  useEffect(() => {
+    if (!items.length) {
+      dispatch(fetchItems());
     }
+  }, []);
+
+  if (error) {
+    return <div>Error! {error.message}</div>;
   }
 
-  render() {
-    const { error, loading, items } = this.props;
-
-    if (error) {
-      return <div>Error! {error.message}</div>;
-    }
-
-    if (loading) {
-      return <div>Loading...</div>;
-    }
-
-    return (
-      <ul>
-        {(items || []).map((item, i) => (
-          <li key={i}>
-            <Link to={`/${item.id}`}>{item.name}</Link>
-          </li>
-        ))}
-      </ul>
-    );
+  if (loading) {
+    return <LoadSpinner />;
   }
+
+  return (
+    <ul className={classes.ItemsList}>
+      {(items || []).map((item, i) => (
+        <li className={classes["ItemsList-Item"]} key={i}>
+          <Link to={`/${item.id}`}>
+            <ItemCard
+              price={item.price}
+              name={item.name}
+              imageID={item.image_id}
+            />
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
 }

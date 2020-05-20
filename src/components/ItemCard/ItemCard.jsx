@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function ItemCard({ name, price, imageID }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -45,8 +45,8 @@ export default function RecipeReviewCard() {
     <Card className={classes.root}>
       <CardMedia
         className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title="Paella dish"
+        image={`https://source.unsplash.com/${imageID}/400x200`}
+        title={name}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
@@ -57,7 +57,7 @@ export default function RecipeReviewCard() {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add">
-          <AddShoppingCartIcon />
+          <AddShoppingCartIcon style={{ color: "green", fontSize: 40 }} />
         </IconButton>
       </CardActions>
     </Card>
